@@ -19,14 +19,15 @@ select
 category,
 sum(total_sale) as total_sales
 from dbo.[SQL - Retail Sales Analysis ]
-group by category
+group by category;
 
 --4. Write a sql query to find the average age of customers who purchased item 
 --from the "Beauty" category
 select 
 avg(age) as avg_age
 from dbo.[SQL - Retail Sales Analysis ]
-where category = 'beauty'
+where category = 'beauty';
+
 --5.  Write a sql query to find all transactions wherethe total sales is greater than 1000
 select 
 *
@@ -41,7 +42,6 @@ gender,
 count(category)
 from dbo.[SQL - Retail Sales Analysis ]
 group by category,gender;
-
 
 --7. Write a sql query to calculate the average sale for each month.
 -- Find out best selling month in each year
@@ -60,22 +60,18 @@ select
    *,
    rank() over(partition by salesYear order by avg_total_sales desc) as rn
    from MonthlySales
-   
- )t where rn = 1
+ )t 
+where rn = 1
 
  --8. Write a sql query to find the top 5 customers based on the
  --highest total sales.
- --with topScore as (
 select 
 top 5
 customer_id,
 sum(total_sale) as totalSales
 from dbo.[SQL - Retail Sales Analysis ]
 group by customer_id
-order by totalSales desc
---)
---select * from topScore
---order by customer_id
+order by totalSales desc;
 
 --9. Write a sql query to find the number of unique customers who purchased
 --items from each category
@@ -95,7 +91,7 @@ group by category;
 	 when datepart(hour, sale_time) between 12 and 17 then 'Noon Shift'
 	 else 'evening'
  end as shift
- --count(*) as orderCount
+
  from dbo.[SQL - Retail Sales Analysis ]
  )
  select 
@@ -104,12 +100,3 @@ group by category;
  from hourly_sale_counting
  group by shift
  order by total_orders desc
- /*
- group by
-     case
-	 when DATEPART(hour, sale_time)<12 then 'morning'
-	 when DATEPART(hour,sale_time) between 12 and 17 then 'Noon'
-	 else 'evening'
-	 end
-	 order by shift
-	 */
